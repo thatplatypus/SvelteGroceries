@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/';
-	import { ShoppingBasketIcon } from '@lucide/svelte';
+	import { MoonIcon, SunIcon, ShoppingBasketIcon } from '@lucide/svelte';
 	import Settings from '@lucide/svelte/icons/settings';
 	import { Ingredient, ingredientStore } from '../stores/ingredient';
 	import { onMount } from 'svelte';
 	import Groceries from '$lib/components/Groceries.svelte';
+	import { toggleMode } from 'mode-watcher';
 
 	let ingredients: Ingredient[] | undefined;
 
@@ -15,7 +16,7 @@
 </script>
 
 <div
-	class="w-full bg-gradient-to-r from-teal-900 from-10% via-cyan-900 via-40% to-background to-100% absolute h-10 -z-10"
+	class="w-full bg-gradient-to-r from-teal-900 from-10% via-cyan-900 via-40% to-background to-100% absolute h-11 -z-10"
 ></div>
 <div class="flex flex-col align-center justify-center container lg:container-xl mx-auto">
 	<div class="flex flex-row p-2 gap-2">
@@ -26,6 +27,11 @@
 			Grocery Helper
 		</h1>
 		<span class="grow"></span>
+		<Button onclick={toggleMode} variant="secondary" size="icon" class="size-8">
+			<SunIcon class="rotate-0 scale-100 !transition-all dark:-rotate-90 dark:scale-0" />
+			<MoonIcon class="absolute rotate-90 scale-0 !transition-all dark:rotate-0 dark:scale-100" />
+			<span class="sr-only">Toggle theme</span>
+		</Button>
 		<Button variant="secondary" size="icon" class="size-8">
 			<Settings />
 		</Button>

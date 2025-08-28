@@ -10,7 +10,7 @@
 		"ui": "$lib/components/ui",
 		"hooks": "$lib/hooks",
 		"lib": "$lib"
-	},
+		},
 	"typescript": true,
 	"registry": "https://shadcn-svelte.com/registry"
 }

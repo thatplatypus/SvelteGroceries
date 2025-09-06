@@ -19,11 +19,17 @@ export class LocalStore<T> {
     if (this._initialized) return;
     this._initialized = true;
     
-    $effect(() => {
-      if (browser) {
-        localStorage.setItem(this.key, this.serialize(this.value));
-      }
-    });
+    // Manual save to localStorage when initialized
+    if (browser) {
+      localStorage.setItem(this.key, this.serialize(this.value));
+    }
+  }
+
+  // Method to manually save when value changes
+  save() {
+    if (browser && this._initialized) {
+      localStorage.setItem(this.key, this.serialize(this.value));
+    }
   }
 
   serialize(value: T): string {

@@ -59,6 +59,7 @@
 			};
 			ingredientList.value = [...ingredientList.value, newIngredient];
 		}
+		ingredientList.save();
 		console.log('Current grocery list:', ingredientList.value);
 		selectedIngredient = null;
 		searchValue = '';
@@ -74,6 +75,7 @@
 		};
 
 		ingredientList.value = [...ingredientList.value, newIngredient];
+		ingredientList.save();
 		selectedIngredient = null;
 		searchValue = '';
 	};
@@ -82,6 +84,7 @@
 		ingredientList.value = ingredientList.value.map((i) =>
 			i.id === ingredient.id ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i
 		);
+		ingredientList.save();
 	};
 
 	const handleSelect = (event: any) => {
@@ -106,7 +109,7 @@
 	<div class="flex flex-row gap-2">
 		<Input bind:value={nameFilter} placeholder="Filter by name..." class="grow" />
 		<div class="flex relative grow">
-			<Select>
+			<Select type="multiple">
 				<SelectTrigger>
 					<span class="truncate">
 						{selectedCategories.length === 0

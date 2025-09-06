@@ -36,6 +36,8 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.9",
+		"@tanstack/svelte-virtual": "^3.13.12",
+		"fuse.js": "^7.1.0",
 		"mode-watcher": "^1.1.0"
 	}
 }

@@ -1,13 +1,43 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/';
 	import { Input } from '$lib/components/ui/input/';
-	import { MinusCircleIcon, Plus, PlusCircleIcon, TrashIcon } from '@lucide/svelte';
+	import { TypeAhead } from '$lib/components/ui/typeahead/';
+	import { MinusCircleIcon, PlusCircleIcon, TrashIcon } from '@lucide/svelte';
 	import type { Ingredient } from '../../stores/ingredient';
+	import { ingredientStore } from '../../stores/ingredient';
 	import { Separator } from '$lib/components/ui/separator/index.js';
 	import { localStore } from '../../stores/localStore.svelte';
 
 	const ingredientList = localStore<Ingredient[]>('ingredientList', []);
-	let ingredientSearch: string = '';
+	let selectedIngredient: Ingredient | null = $state(null);
+	let searchValue = $state('');
+	let availableIngredients: Ingredient[] = $state([]);
+
+	$effect(() => {
+		(async () => {
+			try {
+				availableIngredients = await $ingredientStore;
+			} catch (error) {
+				console.error('Groceries: Failed to load ingredients:', error);
+				availableIngredients = [];
+			}
+		})();
+	});
+
+	const AddIngredient = (ingredient: Ingredient) => {
+		const existingIngredient = ingredientList.value.find((i) => i.id === ingredient.id);
+		if (existingIngredient) {
+			updateQuantity(existingIngredient, 1);
+		} else {
+			const newIngredient: Ingredient = {
+				...ingredient,
+				quantity: 1
+			};
+			ingredientList.value = [...ingredientList.value, newIngredient];
+		}
+		selectedIngredient = null;
+		searchValue = '';
+	};
 
 	const AddCustomIngredient = (name: string) => {
 		if (!name.trim()) return;
@@ -19,7 +49,8 @@
 		};
 
 		ingredientList.value = [...ingredientList.value, newIngredient];
-		ingredientSearch = '';
+		selectedIngredient = null;
+		searchValue = '';
 	};
 
 	const updateQuantity = (ingredient: Ingredient, delta: number) => {
@@ -31,11 +62,30 @@
 	const deleteIngredient = (ingredient: Ingredient) => {
 		ingredientList.value = ingredientList.value.filter((i) => i.id !== ingredient.id);
 	};
+
+	const handleSelect = (event: any) => {
+		AddIngredient(event.detail.item);
+	};
 </script>
 
 <div class="flex flex-row gap-2">
-	<Input type="text" placeholder="Enter ingredient..." class="grow" bind:value={ingredientSearch} />
-	<Button variant="ghost" onclick={() => AddCustomIngredient(ingredientSearch)}><Plus /></Button>
+	<TypeAhead
+		items={availableIngredients}
+		bind:value={selectedIngredient}
+		bind:searchValue={searchValue}
+		placeholder="Search ingredients..."
+		class="grow"
+		getItemKey={(ingredient) => ingredient.id.toString()}
+		getItemLabel={(ingredient) => ingredient.name}
+		getItemDescription={(ingredient) => ingredient.category || ''}
+		fuseOptions={{
+			keys: ['name', 'category'],
+			threshold: 0.3
+		}}
+		allowCustomValue={true}
+		onCustomValue={AddCustomIngredient}
+		on:select={handleSelect}
+	/>
 </div>
 {#each ingredientList.value as ingredient (ingredient.id)}
 	<div class="flex flex-row gap-2 p-1 items-center">
@@ -58,7 +108,7 @@
 		<Button variant="ghost" onclick={() => updateQuantity(ingredient, 1)}><PlusCircleIcon /></Button
 		>
 		<Separator orientation="vertical" class="mx-2" />
-		<span class="grow">{ingredient.name}</span>
+		<span class="grow truncate">{ingredient.name}</span>
 		<Button variant="ghost" size="icon" onclick={() => deleteIngredient(ingredient)}
 			><TrashIcon class="text-red-500" /></Button
 		>

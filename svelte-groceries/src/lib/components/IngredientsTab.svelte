@@ -146,9 +146,9 @@
 		<ul class="space-y-2">
 			{#each filteredIngredients as ingredient (ingredient.id)}
 				<li class="flex flex-row p-2 items-center border rounded">
-					<span class="grow">{ingredient.name}</span>
+					<span class="grow truncate">{ingredient.name}</span>
 					{#if ingredient.category}
-						<span class="text-sm text-muted-foreground mr-2">{ingredient.category}</span>
+						<span class="text-sm text-muted-foreground mr-2 truncate">{ingredient.category}</span>
 					{/if}
 					<Button
 						variant="ghost"

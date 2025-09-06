@@ -2,11 +2,12 @@ import { asyncable } from '../lib/asyncable'
 import type { Asyncable } from '../lib/asyncable'
 
 export class Ingredient {
-    constructor(public id: number, public name: string, public category?: string, public allergens?: string[]) {
+    constructor(public id: number, public name: string, public category?: string, public allergens?: string[], public quantity: number = 1) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.allergens = allergens;
+        this.quantity = quantity;
     }
 }
 

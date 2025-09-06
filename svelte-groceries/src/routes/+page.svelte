@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/';
-	import { MoonIcon, SunIcon, ShoppingBasketIcon } from '@lucide/svelte';
+	import { MoonIcon, SunIcon, ShoppingBasketIcon, TrashIcon } from '@lucide/svelte';
 	import Settings from '@lucide/svelte/icons/settings';
 	import { Ingredient, ingredientStore } from '../stores/ingredient';
 	import { onMount } from 'svelte';
@@ -49,8 +49,10 @@
 			<ul>
 				{#if ingredients}
 					{#each ingredients as ingredient}
-						<li class="flex flex-row">
+						<li class="flex flex-row p-4">
 							{ingredient.name}
+							<span class="grow"></span>
+							<Button size="icon"><TrashIcon /></Button>
 						</li>
 					{/each}
 				{/if}

@@ -32,11 +32,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: svelte-groceries/npm
           cache-dependency-path: svelte-groceries/src/package-lock.json
 
       - name: Install dependencies
-        working-directory: src
+        working-directory: svelte-groceries/src
         run: npm install
 
       #- name: Run tests

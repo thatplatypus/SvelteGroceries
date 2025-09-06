@@ -3,6 +3,7 @@ import { browser } from '$app/environment';
 export class LocalStore<T> {
   value = $state<T>() as T;
   key = '';
+  private _initialized = false;
 
   constructor(key: string, value: T) {
     this.key = key;
@@ -12,9 +13,16 @@ export class LocalStore<T> {
       const item = localStorage.getItem(key);
       if (item) this.value = this.deserialize(item);
     }
+  }
 
+  initialize() {
+    if (this._initialized) return;
+    this._initialized = true;
+    
     $effect(() => {
-      localStorage.setItem(this.key, this.serialize(this.value));
+      if (browser) {
+        localStorage.setItem(this.key, this.serialize(this.value));
+      }
     });
   }
 

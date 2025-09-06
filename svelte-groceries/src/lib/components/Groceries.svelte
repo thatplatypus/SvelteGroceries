@@ -6,14 +6,15 @@
 	import type { Ingredient } from '../../stores/ingredient';
 	import { ingredientStore } from '../../stores/ingredient';
 	import { Separator } from '$lib/components/ui/separator/index.js';
-	import { localStore } from '../../stores/localStore.svelte';
+	import { groceryListStore } from '../../stores/groceryList';
 
-	const ingredientList = localStore<Ingredient[]>('ingredientList', []);
+	const ingredientList = groceryListStore;
 	let selectedIngredient: Ingredient | null = $state(null);
 	let searchValue = $state('');
 	let availableIngredients: Ingredient[] = $state([]);
 
 	$effect(() => {
+		ingredientList.initialize();
 		(async () => {
 			try {
 				availableIngredients = await $ingredientStore;
@@ -72,7 +73,7 @@
 	<TypeAhead
 		items={availableIngredients}
 		bind:value={selectedIngredient}
-		bind:searchValue={searchValue}
+		bind:searchValue
 		placeholder="Search ingredients..."
 		class="grow"
 		getItemKey={(ingredient) => ingredient.id.toString()}
@@ -92,7 +93,7 @@
 		<Input
 			value={ingredient.quantity}
 			type="number"
-			class="max-w-10"
+			class="w-10 lg:w-16"
 			oninput={(e) => {
 				const target = e.target as HTMLInputElement | null;
 				if (!target) return;

@@ -3,16 +3,9 @@
 	import * as Tabs from '$lib/components/ui/tabs/';
 	import { MoonIcon, SunIcon, ShoppingBasketIcon, TrashIcon } from '@lucide/svelte';
 	import Settings from '@lucide/svelte/icons/settings';
-	import { Ingredient, ingredientStore } from '../stores/ingredient';
-	import { onMount } from 'svelte';
 	import Groceries from '$lib/components/Groceries.svelte';
 	import { toggleMode } from 'mode-watcher';
-
-	let ingredients: Ingredient[] | undefined;
-
-	onMount(async () => {
-		ingredients = await ingredientStore.get();
-	});
+	import IngredientsTab from '$lib/components/IngredientsTab.svelte';
 </script>
 
 <div
@@ -46,17 +39,7 @@
 			<Groceries />
 		</Tabs.Content>
 		<Tabs.Content value="ingredients">
-			<ul>
-				{#if ingredients}
-					{#each ingredients as ingredient}
-						<li class="flex flex-row p-4">
-							{ingredient.name}
-							<span class="grow"></span>
-							<Button size="icon"><TrashIcon /></Button>
-						</li>
-					{/each}
-				{/if}
-			</ul>
+			<IngredientsTab />
 		</Tabs.Content>
 		<Tabs.Content value="meals">Enter meals here.</Tabs.Content>
 	</Tabs.Root>

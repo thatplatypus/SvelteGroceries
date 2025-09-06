@@ -2,7 +2,14 @@
 	import { Button } from '$lib/components/ui/button/';
 	import { Input } from '$lib/components/ui/input/';
 	import { TypeAhead } from '$lib/components/ui/typeahead/';
-	import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '$lib/components/ui/dialog/';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle
+	} from '$lib/components/ui/dialog/';
 	import type { Ingredient } from '../../stores/ingredient';
 	import { ingredientStore } from '../../stores/ingredient';
 	import type { Meal } from '../../stores/meal';
@@ -108,11 +115,13 @@
 </script>
 
 <Dialog bind:open>
-	<DialogContent class="max-w-2xl">
+	<DialogContent class="w-full md:max-w-2xl">
 		<DialogHeader>
 			<DialogTitle>{meal ? 'Edit Meal' : 'Add Meal'}</DialogTitle>
 			<DialogDescription>
-				{meal ? 'Modify the ingredients for this meal.' : 'Create a new meal by adding ingredients.'}
+				{meal
+					? 'Modify the ingredients for this meal.'
+					: 'Create a new meal by adding ingredients.'}
 			</DialogDescription>
 		</DialogHeader>
 
@@ -143,7 +152,7 @@
 
 			<div class="space-y-2">
 				{#each mealIngredients as ingredient (ingredient.id)}
-					<IngredientListItem 
+					<IngredientListItem
 						{ingredient}
 						onUpdateQuantity={updateQuantity}
 						onDelete={deleteIngredient}

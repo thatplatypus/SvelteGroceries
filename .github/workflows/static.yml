@@ -48,7 +48,7 @@ jobs:
       #  run: npm run check
 
       - name: Build
-        working-directory: src
+        working-directory: svelte-groceries
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
         run: |

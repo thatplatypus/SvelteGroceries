@@ -2,7 +2,7 @@
     "name": "Grocery Helper",
     "short_name": "GroceryHelper",
     "description": "A modern grocery helper built with SvelteKit",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#06b6d4",

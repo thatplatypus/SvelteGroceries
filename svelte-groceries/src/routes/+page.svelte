@@ -6,6 +6,7 @@
 	import Groceries from '$lib/components/Groceries.svelte';
 	import { toggleMode } from 'mode-watcher';
 	import IngredientsTab from '$lib/components/IngredientsTab.svelte';
+	import Meals from '$lib/components/Meals.svelte';
 </script>
 
 <div
@@ -41,6 +42,6 @@
 		<Tabs.Content value="ingredients">
 			<IngredientsTab />
 		</Tabs.Content>
-		<Tabs.Content value="meals">Enter meals here.</Tabs.Content>
+		<Tabs.Content value="meals"><Meals /></Tabs.Content>
 	</Tabs.Root>
 </div>

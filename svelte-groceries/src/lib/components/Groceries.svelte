@@ -56,7 +56,7 @@
 
 	const updateQuantity = (ingredient: Ingredient, delta: number) => {
 		ingredientList.value = ingredientList.value.map((i) =>
-			i.id === ingredient.id ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i
+			i.id === ingredient.id ? { ...i, quantity: Math.max(0, i.quantity + delta) } : i
 		);
 	};
 
@@ -97,9 +97,9 @@
 			oninput={(e) => {
 				const target = e.target as HTMLInputElement | null;
 				if (!target) return;
-				const newQuantity = parseInt(target.value) || 1;
+				const newQuantity = parseInt(target.value) || 0;
 				ingredientList.value = ingredientList.value.map((i) =>
-					i.id === ingredient.id ? { ...i, quantity: Math.max(1, newQuantity) } : i
+					i.id === ingredient.id ? { ...i, quantity: Math.max(0, newQuantity) } : i
 				);
 			}}
 		/>
@@ -109,7 +109,7 @@
 		<Button variant="ghost" onclick={() => updateQuantity(ingredient, 1)}><PlusCircleIcon /></Button
 		>
 		<Separator orientation="vertical" class="mx-2" />
-		<span class="grow truncate">{ingredient.name}</span>
+		<span class="grow truncate {ingredient.quantity === 0 ? 'line-through text-green-600 dark:text-green-400' : ''}">{ingredient.name}</span>
 		<Button variant="ghost" size="icon" onclick={() => deleteIngredient(ingredient)}
 			><TrashIcon class="text-red-500" /></Button
 		>

@@ -1,11 +1,12 @@
 const CACHE_NAME = 'grocery-helper-cache-v1';
 
 const ASSETS_TO_CACHE = [
-    './',
-    './manifest.json',
-    './ingredients_slim.json',
-    './icon-192.png',
-    './icon-512.png'
+    '/SvelteGroceries/',
+    '/SvelteGroceries/manifest.json',
+    '/SvelteGroceries/ingredients_slim.json',
+    '/SvelteGroceries/icon-192.png',
+    '/SvelteGroceries/icon-512.png',
+    '/SvelteGroceries/favicon.ico'
   ];
   
 // Install event - cache assets

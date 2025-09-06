@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#06b6d4" />
 		<meta name="description" content="A modern grocery helper built with SvelteKit" />
-		<link rel="manifest" href="%sveltekit.paths.base%/manifest.json" />
-		<link rel="apple-touch-icon" href="%sveltekit.paths.base%/icon-192.png" />
-		<link rel="icon" type="image/x-icon" href="%sveltekit.paths.base%/favicon.ico">
+		<link rel="manifest" href="/SvelteGroceries/manifest.json" />
+		<link rel="apple-touch-icon" href="/SvelteGroceries/icon-192.png" />
+		<link rel="icon" type="image/x-icon" href="/SvelteGroceries/favicon.ico">
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
@@ -18,7 +18,7 @@
 <script>
 	if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('%sveltekit.paths.base%/service-worker.js')
+      navigator.serviceWorker.register('/SvelteGroceries/service-worker.js')
         .then(registration => {
           console.log('ServiceWorker registration successful');
         })

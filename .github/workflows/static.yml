@@ -57,7 +57,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'src/build/'
+          path: 'svelte-groceries/build/'
 
   deploy:
     needs: build_site

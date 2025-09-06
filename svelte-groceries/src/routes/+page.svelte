@@ -2,11 +2,11 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/';
 	import { MoonIcon, SunIcon, ShoppingBasketIcon, TrashIcon } from '@lucide/svelte';
-	import Settings from '@lucide/svelte/icons/settings';
 	import Groceries from '$lib/components/Groceries.svelte';
 	import { toggleMode } from 'mode-watcher';
 	import IngredientsTab from '$lib/components/IngredientsTab.svelte';
 	import Meals from '$lib/components/Meals.svelte';
+	import SettingsDialog from '$lib/components/SettingsDialog.svelte';
 </script>
 
 <div
@@ -26,9 +26,7 @@
 			<MoonIcon class="absolute rotate-90 scale-0 !transition-all dark:rotate-0 dark:scale-100" />
 			<span class="sr-only">Toggle theme</span>
 		</Button>
-		<Button variant="secondary" size="icon" class="size-8">
-			<Settings />
-		</Button>
+		<SettingsDialog />
 	</div>
 	<Tabs.Root value="groceries" class="flex w-full p-2">
 		<Tabs.List class="flex w-full">

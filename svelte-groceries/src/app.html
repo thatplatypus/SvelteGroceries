@@ -16,9 +16,9 @@
 </html>
 
 <script>
-	if ('serviceWorker' in navigator) {
+	if ('serviceWorker' in navigator && window.location.href.includes("github")) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/SvelteGroceries/service-worker.js')
+     navigator.serviceWorker.register('/SvelteGroceries/service-worker.js')
         .then(registration => {
           console.log('ServiceWorker registration successful');
         })

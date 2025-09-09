@@ -4,6 +4,7 @@
 	import { ingredientStore } from '../../stores/ingredient';
 	import { groceryListStore } from '../../stores/groceryList';
 	import IngredientListItem from './IngredientListItem.svelte';
+	import { ShoppingCartIcon } from '@lucide/svelte';
 
 	const ingredientList = groceryListStore;
 	let selectedIngredient: Ingredient | null = $state(null);
@@ -90,7 +91,7 @@
 	/>
 </div>
 {#each ingredientList.value as ingredient (ingredient.id)}
-	<IngredientListItem 
+	<IngredientListItem
 		{ingredient}
 		onUpdateQuantity={updateQuantity}
 		onDelete={deleteIngredient}
@@ -102,3 +103,10 @@
 		}}
 	/>
 {/each}
+{#if !ingredientList.value.length}
+	<div class="flex items-center justify-center w-full h-[50vh] flex-col gap-4">
+		<span class="w-[15%] h-[15%] text-cyan-700"><ShoppingCartIcon size="large" /></span>
+		<span class="text-2xl">No items in grocery list!</span>
+		<span class="text-muted-foreground">Add items by searching for ingredients</span>
+	</div>
+{/if}

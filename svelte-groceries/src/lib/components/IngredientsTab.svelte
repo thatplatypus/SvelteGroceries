@@ -5,9 +5,10 @@
 	import { Input } from '$lib/components/ui/input/';
 	import { TypeAhead } from '$lib/components/ui/typeahead/';
 	import { Select, SelectContent, SelectItem, SelectTrigger } from '$lib/components/ui/select/';
-	import { PlusCircleIcon } from '@lucide/svelte';
+	import { PlusCircleIcon, TagIcon } from '@lucide/svelte';
 	import { groceryListStore } from '../../stores/groceryList';
 	import { RingLoader } from 'svelte-loading-spinners';
+	import IngredientDialog from './IngredientDialog.svelte';
 
 	const ingredientList = groceryListStore;
 	let selectedIngredient: Ingredient | null = $state(null);
@@ -17,7 +18,8 @@
 	let selectedCategories: string[] = $state([]);
 	let filteredIngredients: Ingredient[] = $state([]);
 	let availableCategories: string[] = $state([]);
-
+	let open = $state(false);
+	
 	$effect(() => {
 		ingredientList.initialize();
 		(async () => {
@@ -85,11 +87,7 @@
 			i.id === ingredient.id ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i
 		);
 		ingredientList.save();
-	};
-
-	const handleSelect = (event: any) => {
-		AddIngredient(event.detail.item);
-	};
+	};	
 
 	const toggleCategory = (category: string) => {
 		if (selectedCategories.includes(category)) {
@@ -105,7 +103,9 @@
 	};
 </script>
 
-<div class="flex flex-col gap-4">
+<IngredientDialog bind:open ingredient={selectedIngredient} onAddIngredient={AddIngredient} />
+
+<div class="flex flex-col gap-4 min-w-[100vw] md:min-w-[100%]">
 	<div class="flex flex-row gap-2">
 		<Input bind:value={nameFilter} placeholder="Filter by name..." class="grow" />
 		<div class="flex relative grow">
@@ -148,19 +148,27 @@
 	{#if availableIngredients.length > 0}
 		<ul class="space-y-2">
 			{#each filteredIngredients as ingredient (ingredient.id)}
-				<li class="flex flex-row p-2 items-center border rounded">
-					<span class="grow truncate">{ingredient.name}</span>
-					{#if ingredient.category}
-						<span class="text-sm text-muted-foreground mr-2 truncate">{ingredient.category}</span>
-					{/if}
-					<Button
+				<li class="flex flex-row p-2 items-center border rounded min-w-0">					
+					<Button variant="ghost" onclick={() => {open = true; selectedIngredient=ingredient;}} class="w-full justify-start p-2 h-auto text-left">
+						<div class="flex flex-col items-start gap-1 w-full min-w-0">
+							<span class="font-medium truncate">{ingredient.name}</span>
+							{#if ingredient.category}
+								<div class="flex items-center gap-1 text-sm text-muted-foreground min-w-0">
+									<TagIcon class="h-3 w-3 flex-shrink-0" />
+									<span class="truncate">{ingredient.category}</span>
+								</div>
+							{/if}
+						</div>
+						<Button
 						variant="ghost"
 						size="icon"
 						onclick={() => AddIngredient(ingredient)}
-						class="hover:bg-green-100 dark:hover:bg-green-900"
+						class="hover:bg-green-100 dark:hover:bg-green-900 flex-shrink-0"
 					>
 						<PlusCircleIcon />
 					</Button>
+					</Button>
+					
 				</li>
 			{/each}
 		</ul>
@@ -171,3 +179,4 @@
 		<div class="text-center text-muted-foreground"><RingLoader color="#14b8a6" /></div>
 	{/if}
 </div>
+

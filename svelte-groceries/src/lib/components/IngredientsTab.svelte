@@ -19,7 +19,7 @@
 	let filteredIngredients: Ingredient[] = $state([]);
 	let availableCategories: string[] = $state([]);
 	let open = $state(false);
-	
+
 	$effect(() => {
 		ingredientList.initialize();
 		(async () => {
@@ -87,7 +87,7 @@
 			i.id === ingredient.id ? { ...i, quantity: Math.max(1, i.quantity + delta) } : i
 		);
 		ingredientList.save();
-	};	
+	};
 
 	const toggleCategory = (category: string) => {
 		if (selectedCategories.includes(category)) {
@@ -105,7 +105,7 @@
 
 <IngredientDialog bind:open ingredient={selectedIngredient} onAddIngredient={AddIngredient} />
 
-<div class="flex flex-col gap-4 min-w-[100vw] md:min-w-[100%]">
+<div class="flex flex-col gap-4 min-w-[96vw] md:min-w-[100%]">
 	<div class="flex flex-row gap-2">
 		<Input bind:value={nameFilter} placeholder="Filter by name..." class="grow" />
 		<div class="flex relative grow">
@@ -148,8 +148,15 @@
 	{#if availableIngredients.length > 0}
 		<ul class="space-y-2">
 			{#each filteredIngredients as ingredient (ingredient.id)}
-				<li class="flex flex-row p-2 items-center border rounded min-w-0">					
-					<Button variant="ghost" onclick={() => {open = true; selectedIngredient=ingredient;}} class="w-full justify-start p-2 h-auto text-left">
+				<li class="flex flex-row p-2 items-center border rounded min-w-0">
+					<Button
+						variant="ghost"
+						onclick={() => {
+							open = true;
+							selectedIngredient = ingredient;
+						}}
+						class="w-full justify-start p-2 h-auto text-left"
+					>
 						<div class="flex flex-col items-start gap-1 w-full min-w-0">
 							<span class="font-medium truncate">{ingredient.name}</span>
 							{#if ingredient.category}
@@ -160,15 +167,14 @@
 							{/if}
 						</div>
 						<Button
-						variant="ghost"
-						size="icon"
-						onclick={() => AddIngredient(ingredient)}
-						class="hover:bg-green-100 dark:hover:bg-green-900 flex-shrink-0"
-					>
-						<PlusCircleIcon />
+							variant="ghost"
+							size="icon"
+							onclick={() => AddIngredient(ingredient)}
+							class="hover:bg-green-100 dark:hover:bg-green-900 flex-shrink-0"
+						>
+							<PlusCircleIcon />
+						</Button>
 					</Button>
-					</Button>
-					
 				</li>
 			{/each}
 		</ul>
@@ -179,4 +185,3 @@
 		<div class="text-center text-muted-foreground"><RingLoader color="#14b8a6" /></div>
 	{/if}
 </div>
-

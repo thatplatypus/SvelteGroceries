@@ -12,7 +12,7 @@
 <div
 	class="w-full bg-gradient-to-r from-teal-900 from-10% via-cyan-900 via-40% to-background to-100% absolute h-11 -z-10"
 ></div>
-<div class="flex flex-col align-center justify-center container lg:container-xl mx-auto">
+<div class="flex flex-col align-center justify-center container lg:container-xl mx-auto w-[100vw]">
 	<div class="flex flex-row p-2 gap-2">
 		<ShoppingBasketIcon class="text-cyan-500 size-6" />
 		<h1

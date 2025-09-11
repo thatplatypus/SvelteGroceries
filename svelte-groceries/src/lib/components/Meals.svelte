@@ -119,7 +119,7 @@
 		>
 			{#each filteredMeals as meal (meal.id)}
 				<AccordionItem value={meal.id.toString()} class="flex w-full grow flex-col items-center">
-					<div class="flex flex-row grow w-full">
+					<div class="flex flex-row grow w-full items-center">
 						<AccordionTrigger class="flex-1 grow w-full">
 							<div class="flex flex-col items-center gap-2 w-full">
 								<div class="flex flex-row items-center gap-2">

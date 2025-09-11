@@ -7,7 +7,7 @@
 		AccordionItem,
 		AccordionTrigger
 	} from '$lib/components/ui/accordion/';
-	import { PlusIcon, EditIcon, ChevronDownIcon, ChevronUpIcon } from '@lucide/svelte';
+	import { PlusIcon, EditIcon, ChevronDownIcon, ChevronUpIcon, HamburgerIcon } from '@lucide/svelte';
 	import type { Meal } from '../../stores/meal';
 	import { mealStore } from '../../stores/meal';
 	import { groceryListStore } from '../../stores/groceryList';
@@ -162,17 +162,16 @@
 			<div class="text-center text-muted-foreground py-4">No meals match your search</div>
 		{/if}
 	{:else}
-		<div class="text-center text-muted-foreground py-8">
-			No meals yet. Create your first meal below!
-		</div>
-	{/if}
-
-	<div class="flex justify-center pt-4">
-		<Button onclick={openAddDialog}>
+	<div class="flex items-center justify-center w-full h-[50vh] flex-col gap-4">
+		<span class="w-[15%] h-[15%] text-cyan-700"><HamburgerIcon size="large" /></span>
+		<span class="text-2xl">No meals saved!</span>
+		<span class="text-muted-foreground">Create your first meal below</span>
+		<Button onclick={openAddDialog} class="w-75 mx-auto mt-4 bg-gradient-to-r from-cyan-300 to-teal-500">
 			<PlusIcon class="mr-2" />
-			Add Meal
+			Create Meal
 		</Button>
 	</div>
+	{/if}
 
 	<MealDialog
 		open={editMealDialogOpen}

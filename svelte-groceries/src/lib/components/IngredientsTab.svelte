@@ -158,7 +158,7 @@
 						class="w-full justify-start p-2 h-auto text-left"
 					>
 						<div class="flex flex-col items-start gap-1 w-full min-w-0">
-							<span class="font-medium truncate">{ingredient.name}</span>
+							<span class="w-full font-medium truncate">{ingredient.name}</span>
 							{#if ingredient.category}
 								<div class="flex items-center gap-1 text-sm text-muted-foreground min-w-0">
 									<TagIcon class="h-3 w-3 flex-shrink-0" />

@@ -7,6 +7,45 @@
 	import IngredientsTab from '$lib/components/IngredientsTab.svelte';
 	import Meals from '$lib/components/Meals.svelte';
 	import SettingsDialog from '$lib/components/SettingsDialog.svelte';
+	import { browser } from '$app/environment';
+
+	let currentTab = $state('groceries');
+
+	const validTabs = ['groceries', 'ingredients', 'meals'];
+
+	const getTabFromHash = () => {
+		if (!browser) return 'groceries';
+		const hash = window.location.hash.slice(1);
+		return validTabs.includes(hash) ? hash : 'groceries';
+	};
+
+	const updateHash = (tab: string) => {
+		if (!browser) return;
+		window.location.hash = tab;
+	};
+
+	$effect(() => {
+		if (!browser) return;
+		
+		currentTab = getTabFromHash();
+
+		const handleHashChange = () => {
+			currentTab = getTabFromHash();
+		};
+
+		window.addEventListener('hashchange', handleHashChange);
+		
+		return () => {
+			window.removeEventListener('hashchange', handleHashChange);
+		};
+	});
+
+	const handleTabChange = (value: string | undefined) => {
+		if (value && validTabs.includes(value)) {
+			currentTab = value;
+			updateHash(value);
+		}
+	};
 </script>
 
 <div
@@ -28,7 +67,7 @@
 		</Button>
 		<SettingsDialog />
 	</div>
-	<Tabs.Root value="groceries" class="flex w-full p-2">
+	<Tabs.Root bind:value={currentTab} onValueChange={handleTabChange} class="flex w-full p-2">
 		<Tabs.List class="flex w-full">
 			<Tabs.Trigger value="groceries">Groceries</Tabs.Trigger>
 			<Tabs.Trigger value="ingredients">Ingredients</Tabs.Trigger>

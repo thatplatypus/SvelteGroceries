@@ -7,7 +7,15 @@
 		AccordionItem,
 		AccordionTrigger
 	} from '$lib/components/ui/accordion/';
-	import { PlusIcon, EditIcon, ChevronDownIcon, ChevronUpIcon, HamburgerIcon } from '@lucide/svelte';
+	import {
+		Dialog,
+		DialogContent,
+		DialogDescription,
+		DialogFooter,
+		DialogHeader,
+		DialogTitle
+	} from '$lib/components/ui/dialog/';
+	import { PlusIcon, EditIcon, ChevronDownIcon, ChevronUpIcon, HamburgerIcon, TrashIcon } from '@lucide/svelte';
 	import type { Meal } from '../../stores/meal';
 	import { mealStore } from '../../stores/meal';
 	import { groceryListStore } from '../../stores/groceryList';
@@ -22,7 +30,9 @@
 	let allExpanded = $state(false);
 	let editMealDialogOpen = $state(false);
 	let addMealDialogOpen = $state(false);
+	let deleteMealDialogOpen = $state(false);
 	let selectedMeal: Meal | null = $state(null);
+	let mealToDelete: Meal | null = $state(null);
 
 	$effect(() => {
 		meals.initialize();
@@ -85,6 +95,23 @@
 		editMealDialogOpen = true;
 	};
 
+	const confirmDeleteMeal = (meal: Meal) => {
+		mealToDelete = meal;
+		deleteMealDialogOpen = true;
+	};
+
+	const handleDeleteMeal = () => {
+		if (mealToDelete) {
+			deleteMeal(mealToDelete);
+			closeDeleteDialog();
+		}
+	};
+
+	const closeDeleteDialog = () => {
+		deleteMealDialogOpen = false;
+		mealToDelete = null;
+	};
+
 	const closeEditDialog = () => {
 		editMealDialogOpen = false;
 		selectedMeal = null;
@@ -132,6 +159,10 @@
 						</AccordionTrigger>
 
 						<span class="flex grow"></span>
+
+						<Button variant="ghost" size="icon" onclick={() => confirmDeleteMeal(meal)}
+							><TrashIcon class="text-red-500" /></Button
+						>
 
 						<Button variant="ghost" size="icon" onclick={() => openEditDialog(meal)}>
 							<EditIcon />
@@ -181,4 +212,24 @@
 	/>
 
 	<MealDialog open={addMealDialogOpen} onClose={closeAddDialog} onSave={saveMeal} />
+
+	<!-- Delete Confirmation Dialog -->
+	<Dialog bind:open={deleteMealDialogOpen}>
+		<DialogContent>
+			<DialogHeader>
+				<DialogTitle>Delete Meal</DialogTitle>
+				<DialogDescription>
+					Are you sure you want to delete "{mealToDelete?.name}"? This action cannot be undone.
+				</DialogDescription>
+			</DialogHeader>
+			<DialogFooter>
+				<Button variant="outline" onclick={closeDeleteDialog}>
+					Cancel
+				</Button>
+				<Button variant="destructive" onclick={handleDeleteMeal}>
+					Delete
+				</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Dialog>
 </div>

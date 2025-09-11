@@ -166,7 +166,7 @@
 		<span class="w-[15%] h-[15%] text-cyan-700"><HamburgerIcon size="large" /></span>
 		<span class="text-2xl">No meals saved!</span>
 		<span class="text-muted-foreground">Create your first meal below</span>
-		<Button onclick={openAddDialog} class="w-75 mx-auto mt-4 bg-gradient-to-r from-cyan-300 to-teal-500">
+		<Button onclick={openAddDialog} class="w-75 mx-auto mt-4 bg-gradient-to-r from-cyan-500 to-cyan-600">
 			<PlusIcon class="mr-2" />
 			Create Meal
 		</Button>

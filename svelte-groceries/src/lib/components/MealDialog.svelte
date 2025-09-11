@@ -168,7 +168,7 @@
 
 		<DialogFooter>
 			<Button variant="outline" onclick={onClose}>Cancel</Button>
-			<Button onclick={handleSave} disabled={!mealName.trim()}>
+			<Button onclick={handleSave} disabled={!mealName.trim()} class="bg-gradient-to-r from-cyan-500 to-cyan-600">
 				{meal ? 'Update Meal' : 'Add Meal'}
 			</Button>
 		</DialogFooter>

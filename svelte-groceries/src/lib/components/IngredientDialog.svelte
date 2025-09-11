@@ -36,11 +36,11 @@
 			<AllergyInfo allergens={ingredient.allergens} />
 			
 			{#if onAddIngredient}
-				<div class="flex justify-end pt-4 border-t">
+				<div class="flex w-full pt-4 border-t">
 					<Button onclick={() => {
 						onAddIngredient(ingredient);
 						open = false;
-					}} class="flex items-center gap-2">
+					}} class="flex w-full items-center gap-2 bg-gradient-to-r from-cyan-500 to-cyan-600">
 						<PlusCircleIcon class="h-4 w-4" />
 						Add to Grocery List
 					</Button>
